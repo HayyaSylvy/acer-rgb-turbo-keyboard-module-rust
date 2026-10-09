@@ -17,7 +17,6 @@
 
         src = ./.;
 
-        # Assumes the project contains a committed Cargo.lock.
         cargoLock.lockFile = ./Cargo.lock;
 
         meta = {
@@ -64,9 +63,6 @@
             environment.systemPackages = [
               acerPredatorTurboRgb
             ];
-
-            # Keep this only if the package actually installs the
-            # corresponding kernel module.
             boot.kernelModules = [ "facer" ];
           };
         };
