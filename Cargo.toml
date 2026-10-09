@@ -1,0 +1,22 @@
+[package]
+name = "acer-predator-turbo-rgb"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0"
+description = "Acer Predator Turbo and RGB keyboard Linux kernel module rewritten in Rust"
+repository = "https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module"
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
+dirs = "5.0"
+
+[[bin]]
+name = "facer-rgb"
+path = "src/bin/facer_rgb.rs"
+
+[[bin]]
+name = "keyboard"
+path = "src/bin/keyboard.rs"
+
+[lib]
+crate-type = ["rlib"]
