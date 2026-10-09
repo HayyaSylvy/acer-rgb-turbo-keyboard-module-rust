@@ -9,6 +9,7 @@ repository = "https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyb
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
 dirs = "5.0"
+kapi = "0.3.0"
 
 [[bin]]
 name = "facer-rgb"
@@ -20,3 +21,6 @@ path = "src/bin/keyboard.rs"
 
 [lib]
 crate-type = ["rlib"]
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ["cfg(KERNEL)"] }
