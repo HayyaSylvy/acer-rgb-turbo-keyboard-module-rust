@@ -5,7 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust)](https://github.com/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust/issues)
 [![GitHub stars](https://img.shields.io/github/stars/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust)](https://github.com/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust/stargazers)
 
-A Rust rewrite of the [Acer Predator Turbo and RGB keyboard Linux kernel module](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module) that provides control for Acer Predator Turbo mode and RGB keyboard backlight via WMI interfaces.
+An EXPERIMENTAL Rust rewrite of the [Acer Predator Turbo and RGB keyboard Linux kernel module](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module) that provides control for Acer Predator Turbo mode and RGB keyboard backlight via WMI interfaces.
 
 ## Overview
 
