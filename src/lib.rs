@@ -212,7 +212,7 @@ pub extern "C" fn cleanup_module() {
 // Module information
 #[link_section = ".modinfo"]
 #[used]
-static MODULE_LICENSE: [u8; 20] = *b"license=GPL\0";
+static MODULE_LICENSE: [u8; 12] = *b"license=GPL\0";
 
 #[link_section = ".modinfo"]
 #[used]
