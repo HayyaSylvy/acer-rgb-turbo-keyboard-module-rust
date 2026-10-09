@@ -1,0 +1,1 @@
+/home/ladyhayya/Projects/acer-predator-turbo-and-rgb-keyboard-linux-module-rust/target/release/facer-rgb: /home/ladyhayya/Projects/acer-predator-turbo-and-rgb-keyboard-linux-module-rust/src/bin/facer_rgb.rs /home/ladyhayya/Projects/acer-predator-turbo-and-rgb-keyboard-linux-module-rust/src/lib.rs

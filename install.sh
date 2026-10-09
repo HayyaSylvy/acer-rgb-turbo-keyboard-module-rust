@@ -58,6 +58,9 @@ chmod +x /usr/local/bin/facer-rgb /usr/local/bin/keyboard
 echo "[*] Creating device nodes..."
 mknod /dev/acer-gkbbl-0 c 250 0 || true
 mknod /dev/acer-gkbbl-static-0 c 250 1 || true
+# Set permissions to allow read/write for all users (fixes permission denied)
+chmod 666 /dev/acer-gkbbl-0 || true
+chmod 666 /dev/acer-gkbbl-static-0 || true
 
 echo "[*] Done"
 echo "[*] Note: This is a simplified installation script for demonstration purposes"

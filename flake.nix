@@ -24,6 +24,10 @@
           platforms = lib.platforms.linux;
         };
       };
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [ acerPredatorTurboRgb ];
+      };
     in
     {
       packages.${system} = {

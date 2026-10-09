@@ -1,0 +1,1 @@
+/home/ladyhayya/Projects/acer-predator-turbo-and-rgb-keyboard-linux-module-rust/target/release/keyboard: /home/ladyhayya/Projects/acer-predator-turbo-and-rgb-keyboard-linux-module-rust/src/bin/keyboard.rs /home/ladyhayya/Projects/acer-predator-turbo-and-rgb-keyboard-linux-module-rust/src/lib.rs
