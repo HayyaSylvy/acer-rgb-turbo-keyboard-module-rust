@@ -6,9 +6,8 @@
   outputs = { self, nixpkgs }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
-  in {
-    packages.${system}.default = pkgs.rustPlatform.buildRustPackage rec {
-      pname = "acer-predator-turbo-rgb";
+    pkg = pkgs.rustPlatform.buildRustPackage rec {
+      pname = "acer-predator-tubo-rgb";
       version = "0.1.0";
       src = ./.;
       meta = with pkgs.lib; {
@@ -19,15 +18,18 @@
         platforms = pkgs.lib.platforms.linux;
       };
     };
-    packages.${system}.acer-predator-turbo-rgb = packages.${system}.default;
+  in
+  {
+    packages.${system}.default = pkg;
+    packages.${system}.acer-predator-turbo-rgb = pkg;
     apps.${system}.default = {
       facer-rgb = {
         type = "app";
-        program = "${packages.${system}.default}/bin/facer-rgb";
+        program = "${pkg}/bin/facer-rgb";
       };
       keyboard = {
         type = "app";
-        program = "${packages.${system}.default}/bin/keyboard";
+        program = "${pkg}/bin/keyboard";
       };
     };
   };
