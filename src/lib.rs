@@ -119,8 +119,8 @@ static mut TURBO_STATE: bool = false;
 
         // Check that we have a valid buffer
         let obj = unsafe { &*(response as *const bindings::acpi_object) };
-        if obj.type != bindings::ACPI_TYPE_BUFFER {
-            error!("WMI event is not a buffer type: {}", obj.type);
+        if obj.r#type != bindings::ACPI_TYPE_BUFFER {
+            error!("WMI event is not a buffer type: {}", obj.r#type);
             unsafe { bindings::kfree(response) };
             return;
         }
