@@ -220,4 +220,4 @@ static MODULE_DESCRIPTION: [u8; 50] = *b"Acer Predator Turbo and RGB Keyboard (R
 
 #[link_section = ".modinfo"]
 #[used]
-static MODULE_AUTHOR: [u8; 30] = *b"Rust Kernel Developer\0";
+static MODULE_AUTHOR: [u8; 22] = *b"Rust Kernel Developer\0";
