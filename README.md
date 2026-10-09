@@ -18,17 +18,14 @@ This project is a complete rewrite in Rust of the original C/Python implementati
 
 ## Features
 
-- ✅ Turbo mode control
-- ✅ RGB keyboard backlight control
-- ✅ Multiple lighting effects: Static, Breathing, Neon, Wave, Shifting, Zoom
-- ✅ Per-zone lighting control (4 zones)
-- ✅ Adjustable speed, brightness, and direction
-- ✅ Custom RGB colors
-- ✅ Profile saving and loading
-- ✅ Interactive keyboard utility
-- ✅ Systemd and OpenRC service support
-- ✅ DKMS support for automatic kernel module rebuilds
-- ✅ NixOS package for easy installation
+- Turbo mode control
+- RGB keyboard backlight control
+- Multiple lighting effects: Static, Breathing, Neon, Wave, Shifting, Zoom and per-zone lighting control (4 zones)
+- Adjustable speed, brightness, and direction
+- Custom RGB colors
+- Profile saving and loading
+- Interactive keyboard utility
+- NixOS package
 
 ## Installation
 
@@ -54,8 +51,6 @@ Then run:
 ```bash
 sudo nixos-rebuild switch
 ```
-
-### Manual Installation
 
 #### Prerequisites
 
@@ -135,4 +130,4 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 - Original project: [JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module)
 - Rust for Linux project
-- Contributors to the original project
+- Contributors to the original project 
