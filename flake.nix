@@ -6,38 +6,51 @@
   outputs = { self, nixpkgs }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
-    pkg = pkgs.rustPlatform.buildRustPackage rec {
-      pname = "acer-predator-turbo-rgb";
+  in
+  {
+    packages.${system}.default = pkgs.rustPlatform.buildRustPackage rec {
+      pname = "acer-predator-tubo-rgb";
       version = "0.1.0";
       src = ./.;
       meta = with pkgs.lib; {
         description = "Acer Predator Turbo and RGB keyboard Linux kernel module utilities (Rust rewrite)";
         homepage = https://github.com/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust;
-        license = licenses.gpl3;
+        license = pkgs.lib.licenses.gpl3;
         maintainers = with pkgs.lib.maintainers; [ ];
         platforms = pkgs.lib.platforms.linux;
       };
     };
-  in
-  {
-    packages.${system}.default = pkg;
-    packages.${system}.acer-predator-turbo-rgb = pkg;
+    packages.${system}.acer-predator-turbo-rgb = packages.${system}.default;
     apps.${system}.default = {
       facer-rgb = {
         type = "app";
-        program = "${pkg}/bin/facer-rgb";
+        program = "${packages.${system}.default}/bin/facer-rgb";
       };
       keyboard = {
         type = "app";
-        program = "${pkg}/bin/keyboard";
+        program = "${packages.${system}.default}/bin/keyboard";
       };
     };
-    nixosModules.default = {
-      options = {
-        services.acer-predator-turbo-rgb.enable = pkgs.lib.mkEnableOption "Whether to enable the Acer Predator Turbo RGB keyboard utilities and kernel module.";
+    nixosModules.default = { config, pkgs, lib, ... }: let
+      mypkg = pkgs.rustPlatform.buildRustPackage rec {
+        pname = "acer-predator-tubo-rgb";
+        version = "0.1.0";
+        src = ./.;
+        meta = with pkgs.lib; {
+          description = "Acer Predator Turbo and RGB keyboard Linux kernel module utilities (Rust rewrite)";
+          homepage = https://github.com/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust;
+          license = pkgs.lib.licenses.gpl3;
+          maintainers = with pkgs.lib.maintainers; [ ];
+          platforms = pkgs.lib.platforms.linux;
+        };
       };
-      config = pkgs.lib.mkIf config.services.acer-predator-turbo-rgb.enable {
-        environment.systemPackages = [ pkg ];
+    in
+    {
+      options = {
+        services.acer-predator-tubo-rgb.enable = pkgs.lib.mkEnableOption "Whether to enable the Acer Predator Turbo RGB keyboard utilities and kernel module.";
+      };
+      config = pkgs.lib.mkIf config.services.acer-predator-tubo-rgb.enable {
+        environment.systemPackages = [ mypkg ];
         boot.kernelModules = [ "facer" ];
         # Note: The utilities (facer-rgb and keyboard) are designed for interactive or one-off use.
         # For persistent turbo-button functionality, you may need to create a systemd service that
