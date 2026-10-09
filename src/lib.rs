@@ -96,10 +96,10 @@ pub mod common {
 mod bindings {
     // In a real implementation, these would be generated bindings to kernel APIs
     use core::ffi::c_void;
-    
+
     pub type c_int = i32;
     pub type size_t = usize;
-    
+
     // Placeholder for kernel types and functions
     pub struct module;
     pub struct device;
@@ -108,24 +108,17 @@ mod bindings {
     pub struct wmi_device;
     pub struct input_dev;
     pub struct cdev;
-    
+
     // Placeholder constants
     pub const ENODEV: c_int = 19;
     pub const EBUSY: c_int = 16;
     pub const EINVAL: c_int = 22;
     pub const ENOMEM: c_int = 12;
-    
+
     // Placeholder functions - in reality these would be provided by the kernel
-    #[link_name = "pr_info"]
     pub extern "C" fn pr_info(fmt: *const u8, ...);
-    
-    #[link_name = "pr_debug"]
     pub extern "C" fn pr_debug(fmt: *const u8, ...);
-    
-    #[link_name = "wmi_has_guid"]
     pub extern "C" fn wmi_has_guid(guid: *const u8) -> bool;
-    
-    #[link_name = "dmi_check_system"]
     pub extern "C" fn dmi_check_system(table: *const u8) -> bool;
 }
 
@@ -141,57 +134,53 @@ static mut TURBO_STATE: i32 = 0;
 // Module initialization function
 #[no_mangle]
 pub extern "C" fn acer_wmi_init() -> i32 {
-    unsafe {
-        bindings::pr_info(b"Acer Laptop ACPI-WMI Extras (Rust)\0".as_ptr());
-        
-        // In a real implementation, we would check for blacklisted hardware
-        // if bindings::dmi_check_system(acer_blacklist) {
-        //     bindings::pr_info(b"Blacklisted hardware detected - not loading\0".as_ptr());
-        //     return bindings::ENODEV;
-        // }
-        
-        // find_quirks(); // Would be implemented
-        
-        // Detect ACPI-WMI interface
-        // This is a simplified version - real implementation would be more complex
-        if bindings::wmi_has_guid(b"AMW0_GUID1\0".as_ptr()) && 
-           bindings::wmi_has_guid(b"WMID_GUID1\0".as_ptr()) {
-            // interface = &AMW0_V2_interface;
-        } else if !bindings::wmi_has_guid(b"AMW0_GUID1\0".as_ptr()) &&
-                  bindings::wmi_has_guid(b"WMID_GUID1\0".as_ptr()) {
-            // interface = &wmid_interface;
-        }
-        
-        // More initialization would go here...
-        
-        0 // Success
+    unsafe { bindings::pr_info(b"Acer Laptop ACPI-WMI Extras (Rust)\0".as_ptr()); }
+
+    // In a real implementation, we would check for blacklisted hardware
+    // if bindings::dmi_check_system(acer_blacklist) {
+    //     bindings::pr_info(b"Blacklisted hardware detected - not loading\0".as_ptr());
+    //     return bindings::ENODEV;
+    // }
+
+    // find_quirks(); // Would be implemented
+
+    // Detect ACPI-WMI interface
+    // This is a simplified version - real implementation would be more complex
+    if bindings::wmi_has_guid(b"AMW0_GUID1\0".as_ptr()) &&
+       bindings::wmi_has_guid(b"WMID_GUID1\0".as_ptr()) {
+        // interface = &AMW0_V2_interface;
+    } else if !bindings::wmi_has_guid(b"AMW0_GUID1\0".as_ptr()) &&
+              bindings::wmi_has_guid(b"WMID_GUID1\0".as_ptr()) {
+        // interface = &wmid_interface;
     }
+
+    // More initialization would go here...
+
+    0 // Success
 }
 
 // Module cleanup function
 #[no_mangle]
 pub extern "C" fn acer_wmi_exit() {
-    unsafe {
-        // In a real implementation, we would clean up resources
-        // if bindings::wmi_has_guid(b"ACERWMID_EVENT_GUID\0".as_ptr()) {
-        //     acer_wmi_input_destroy();
-        // }
-        
-        // if acer_wmi_accel_dev {
-        //     input_unregister_device(acer_wmi_accel_dev);
-        // }
-        
-        // if bindings::wmi_has_guid(b"WMID_GUID4\0".as_ptr()) {
-        //     gaming_kbbl_cdev_exit();
-        //     gaming_kbbl_static_cdev_exit();
-        // }
-        
-        // remove_debugfs();
-        // platform_device_unregister(acer_platform_device);
-        // platform_driver_unregister(&acer_platform_driver);
-        
-        bindings::pr_info(b"Acer Laptop WMI Extras unloaded (Rust)\0".as_ptr());
-    }
+    // In a real implementation, we would clean up resources
+    // if bindings::wmi_has_guid(b"ACERWMID_EVENT_GUID\0".as_ptr()) {
+    //     acer_wmi_input_destroy();
+    // }
+
+    // if acer_wmi_accel_dev {
+    //     input_unregister_device(acer_wmi_accel_dev);
+    // }
+
+    // if bindings::wmi_has_guid(b"WMID_GUID4\0".as_ptr()) {
+    //     gaming_kbbl_cdev_exit();
+    //     gaming_kbbl_static_cdev_exit();
+    // }
+
+    // remove_debugfs();
+    // platform_device_unregister(acer_platform_device);
+    // platform_driver_unregister(&acer_platform_driver);
+
+    unsafe { bindings::pr_info(b"Acer Laptop WMI Extras unloaded (Rust)\0".as_ptr()); }
 }
 
 // This would be used by the kernel to register the module
