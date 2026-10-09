@@ -31,20 +31,25 @@
         program = "${packages.${system}.default}/bin/keyboard";
       };
     };
-    nixosModules.default = {
-      boot.kernelModules = [ "facer" ];
-      environment.systemPackages = [ pkgs.rustPlatform.buildRustPackage rec {
-        pname = "acer-predator-turbo-rgb";
-        version = "0.1.0";
-        src = ./.;
-        meta = with pkgs.lib; {
-          description = "Acer Predator Turbo and RGB keyboard Linux kernel module utilities (Rust rewrite)";
-          homepage = https://github.com/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust;
-          license = pkgs.lib.licenses.gpl3;
-          maintainers = with pkgs.lib.maintainers; [ ];
-          platforms = pkgs.lib.platforms.linux;
-        };
-      } ];
+    nixosModules.default = { config, pkgs, lib, ... }: {
+      options = {
+        services.acer-predator-turbo-rgb.enable = pkgs.lib.mkEnableOption "Whether to enable the Acer Predator Turbo RGB keyboard utilities and kernel module.";
+      };
+      config = {
+        boot.kernelModules = lib.mkIf config.services.acer-predator-turbo-rgb.enable [ "facer" ];
+        environment.systemPackages = lib.mkIf config.services.acer-predator-turbo-rgb.enable [ pkgs.rustPlatform.buildRustPackage rec {
+          pname = "acer-predator-turbo-rgb";
+          version = "0.1.0";
+          src = ./.;
+          meta = with pkgs.lib; {
+            description = "Acer Predator Turbo and RGB keyboard Linux kernel module utilities (Rust rewrite)";
+            homepage = https://github.com/HayyaSylvy/acer-rgb-turbo-keyboard-module-rust;
+            license = pkgs.lib.licenses.gpl3;
+            maintainers = with pkgs.lib.maintainers; [ ];
+            platforms = pkgs.lib.platforms.linux;
+          };
+        } ];
+      };
     };
   };
 }
