@@ -216,7 +216,7 @@ static MODULE_LICENSE: [u8; 20] = *b"license=GPL\0";
 
 #[link_section = ".modinfo"]
 #[used]
-static MODULE_DESCRIPTION: [u8; 50] = *b"Acer Predator Turbo and RGB Keyboard (Rust)\0";
+static MODULE_DESCRIPTION: [u8; 44] = *b"Acer Predator Turbo and RGB Keyboard (Rust)\0";
 
 #[link_section = ".modinfo"]
 #[used]
