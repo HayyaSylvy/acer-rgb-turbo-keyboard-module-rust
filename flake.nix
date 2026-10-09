@@ -6,7 +6,9 @@
   outputs = { self, nixpkgs }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
-    pkg = pkgs.rustPlatform.buildRustPackage rec {
+  in
+  {
+    packages.${system}.default = pkgs.rustPlatform.buildRustPackage rec {
       pname = "acer-predator-tubo-rgb";
       version = "0.1.0";
       src = ./.;
@@ -18,26 +20,24 @@
         platforms = pkgs.lib.platforms.linux;
       };
     };
-  in
-  {
-    packages.${system}.default = pkg;
-    packages.${system}.acer-predator-turbo-rgb = pkg;
+    packages.${system}.acer-predator-turbo-rgb = packages.${system}.default;
     apps.${system}.default = {
       facer-rgb = {
         type = "app";
-        program = "${pkg}/bin/facer-rgb";
+        program = "${packages.${system}.default}/bin/facer-rgb";
       };
       keyboard = {
         type = "app";
-        program = "${pkg}/bin/keyboard";
+        program = "${packages.${system}.default}/bin/keyboard";
       };
     };
     nixosModules.default = { config, pkgs, lib, ... }: {
       options = {
         services.acer-predator-turbo-rgb.enable = pkgs.lib.mkEnableOption "Whether to enable the Acer Predator Turbo RGB keyboard utilities and kernel module.";
       };
-      config = pkgs.lib.mkIf config.services.acer-predator-turbo-rgb.enable {
-        environment.systemPackages = [ pkgs.rustPlatform.buildRustPackage rec {
+      config = {
+        boot.kernelModules = mkIf config.services.acer-predator-turbo-rgb.enable [ "facer" ];
+        environment.systemPackages = mkIf config.services.acer-predator-turbo-rgb.enable [ pkgs.rustPlatform.buildRustPackage rec {
           pname = "acer-predator-turbo-rgb";
           version = "0.1.0";
           src = ./.;
@@ -49,12 +49,6 @@
             platforms = pkgs.lib.platforms.linux;
           };
         } ];
-        boot.kernelModules = [ "facer" ];
-        # Note: The utilities (facer-rgb and keyboard) are designed for interactive or one-off use.
-        # For persistent turbo-button functionality, you may need to create a systemd service that
-        # loads the kernel module and then runs the utilities in a loop or via a daemon.
-        # Refer to the provided install_service.sh and install_openrc.sh scripts in the repository
-        # for examples of how to create such a service.
       };
     };
   };
